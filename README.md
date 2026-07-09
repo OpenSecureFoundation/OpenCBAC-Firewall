@@ -2,12 +2,13 @@
 
 Conception, développement et déploiement d’un pare-feu hôte sous Linux basé sur l’inspection d’état des connexions (CBAC) avec interface web, journalisation des événements, simulation d’attaques et mécanismes de défense
 
-Fonctionnalités
+# Fonctionnalités
 
 Gestion des règles (IP, ports, protocoles) 
 Inspection d’état (NEW, ESTABLISHED, RELATED) 
 Journalisation des connexions 
-Dashboard web :
+
+# Dashboard web :
 trafic 
 alertes 
 gestion dynamique des règles
