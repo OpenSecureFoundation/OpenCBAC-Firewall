@@ -12,12 +12,14 @@ trafic 
 alertes 
 gestion dynamique des règles 
 
-Partie attaque (obligatoire)
+ 
+# Partie attaqu
 scan de ports 
 tentative de connexion non autorisée 
 flood simple 
 
-Partie défense
+ 
+# Partie défense
 blocage dynamique 
 filtrage stateful 
 limitation de connexions 
