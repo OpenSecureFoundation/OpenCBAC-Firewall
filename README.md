@@ -18,7 +18,6 @@ gestion dynamique des règles
 scan de ports 
 tentative de connexion non autorisée 
 flood simple
-
  
 # Partie défense
 blocage dynamique 
