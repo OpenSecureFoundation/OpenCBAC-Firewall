@@ -10,13 +10,13 @@ Journalisation des connexions 
 Dashboard web :
 trafic 
 alertes 
-gestion dynamique des règles 
+gestion dynamique des règles
 
  
-# Partie attaqu
+# Partie attaque
 scan de ports 
 tentative de connexion non autorisée 
-flood simple 
+flood simple
 
  
 # Partie défense
