@@ -1,0 +1,16 @@
+[Unit]
+Description=CBAC Shield host firewall with local FastAPI dashboard
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/cbac-shield
+EnvironmentFile=/etc/cbac-shield/cbac.conf
+ExecStart=/opt/cbac-shield/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
+ExecStartPre=/opt/cbac-shield/.venv/bin/python -c "from app.firewall_engine import FirewallEngine; FirewallEngine().apply_all()"
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connexion - CBAC Shield</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+</head>
+<body class="login-screen">
+  <form class="login-box" method="post" action="/login">
+    <h1>CBAC Shield</h1>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    <label>Utilisateur
+      <input name="username" autocomplete="username" required>
+    </label>
+    <label>Mot de passe
+      <input name="password" type="password" autocomplete="current-password" required>
+    </label>
+    <button type="submit">Connexion</button>
+    <p class="muted">Compte initial: admin / admin123</p>
+  </form>
+</body>
+</html>

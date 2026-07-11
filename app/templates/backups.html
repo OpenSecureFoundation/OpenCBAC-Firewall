@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Sauvegardes des regles</h1>
+<table>
+  <thead><tr><th>Fichier</th><th></th></tr></thead>
+  <tbody>
+  {% for backup in backups %}
+    <tr>
+      <td>{{ backup }}</td>
+      <td><form method="post" action="/backups/{{ backup }}/restore"><button>Restaurer</button></form></td>
+    </tr>
+  {% else %}
+    <tr><td colspan="2">Aucune sauvegarde.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

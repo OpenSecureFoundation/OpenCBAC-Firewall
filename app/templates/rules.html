@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Regles de filtrage INPUT</h1>
+<form class="grid-form" method="post" action="/rules">
+  <label>IP source<input name="source_ip" value="any"></label>
+  <label>IP destination<input name="destination_ip" value="any"></label>
+  <label>Protocole
+    <select name="protocol"><option>TCP</option><option>UDP</option><option>ICMP</option><option selected>ALL</option></select>
+  </label>
+  <label>Port source<input name="source_port" value="any"></label>
+  <label>Port destination<input name="destination_port" value="any"></label>
+  <label>Action
+    <select name="action"><option>ALLOW</option><option>DENY</option></select>
+  </label>
+  <label>Priorite<input name="priority" type="number" value="100"></label>
+  <label class="check"><input name="enabled" type="checkbox" checked> Activee</label>
+  <button type="submit">Ajouter</button>
+</form>
+
+<table>
+  <thead>
+    <tr><th>Priorite</th><th>Source</th><th>Destination</th><th>Proto</th><th>Ports</th><th>Action</th><th>Etat</th><th></th></tr>
+  </thead>
+  <tbody>
+  {% for rule in rules %}
+    <tr>
+      <td>{{ rule.priority }}</td>
+      <td>{{ rule.source_ip }}</td>
+      <td>{{ rule.destination_ip }}</td>
+      <td>{{ rule.protocol }}</td>
+      <td>{{ rule.source_port }} -> {{ rule.destination_port }}</td>
+      <td>{{ rule.action }}</td>
+      <td>{{ "active" if rule.enabled else "desactivee" }}</td>
+      <td class="actions">
+        <a class="button-link" href="/rules/{{ rule.id }}/edit">Modifier</a>
+        <form method="post" action="/rules/{{ rule.id }}/toggle"><button>{{ "Desactiver" if rule.enabled else "Activer" }}</button></form>
+        <form method="post" action="/rules/{{ rule.id }}/delete"><button class="danger">Supprimer</button></form>
+      </td>
+    </tr>
+  {% else %}
+    <tr><td colspan="8">Aucune regle personnalisee.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

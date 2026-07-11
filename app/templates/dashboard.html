@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Tableau de bord</h1>
+    <p>Mode {{ status.mode }} - iptables: {{ status.iptables }}</p>
+    <p>Config {{ status.config_dir }} - logs {{ status.log_dir }}</p>
+    {% if status.error %}<p class="error">{{ status.error }}</p>{% endif %}
+  </div>
+  <form method="post" action="/reload">
+    <button type="submit">Recharger iptables</button>
+  </form>
+</section>
+
+<section class="metrics">
+  <div><span>{{ "Actif" if status.active else "Simulation" }}</span><strong>Etat</strong></div>
+  <div><span>{{ rule_count }}</span><strong>Regles actives</strong></div>
+  <div><span>{{ blocked_count }}</span><strong>IP bloquees</strong></div>
+  <div><span>{{ status.default_policy }}</span><strong>Politique INPUT</strong></div>
+</section>
+
+<section class="split">
+  <div>
+    <h2>Dernieres alertes</h2>
+    {% for alert in alerts %}
+      <article class="row"><strong>{{ alert.level }}</strong><span>{{ alert.message }}</span><small>{{ alert.time }}</small></article>
+    {% else %}
+      <p class="muted">Aucune alerte.</p>
+    {% endfor %}
+  </div>
+  <div>
+    <h2>Derniers evenements</h2>
+    {% for event in events %}
+      <article class="row"><strong>{{ event.action }}</strong><span>{{ event.message }}</span><small>{{ event.time }}</small></article>
+    {% else %}
+      <p class="muted">Aucun evenement.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
