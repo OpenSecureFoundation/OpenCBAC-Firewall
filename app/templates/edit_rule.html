@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Modifier une regle</h1>
+    <p>{{ rule.id }}</p>
+  </div>
+  <a class="button-link" href="/rules">Retour</a>
+</section>
+
+<form class="grid-form" method="post" action="/rules/{{ rule.id }}/update">
+  <label>IP source
+    <input name="source_ip" value="{{ rule.source_ip }}" required>
+  </label>
+  <label>IP destination
+    <input name="destination_ip" value="{{ rule.destination_ip }}" required>
+  </label>
+  <label>Protocole
+    <select name="protocol">
+      {% for protocol in ["TCP", "UDP", "ICMP", "ALL"] %}
+        <option value="{{ protocol }}" {% if rule.protocol == protocol %}selected{% endif %}>{{ protocol }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>Port source
+    <input name="source_port" value="{{ rule.source_port }}" required>
+  </label>
+  <label>Port destination
+    <input name="destination_port" value="{{ rule.destination_port }}" required>
+  </label>
+  <label>Action
+    <select name="action">
+      {% for action in ["ALLOW", "DENY"] %}
+        <option value="{{ action }}" {% if rule.action == action %}selected{% endif %}>{{ action }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>Priorite
+    <input name="priority" type="number" value="{{ rule.priority }}" required>
+  </label>
+  <label class="check">
+    <input name="enabled" type="checkbox" {% if rule.enabled %}checked{% endif %}> Activee
+  </label>
+  <button type="submit">Enregistrer</button>
+</form>
+{% endblock %}

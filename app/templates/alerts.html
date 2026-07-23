@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Alertes et blocages</h1>
+<form class="grid-form compact" method="post" action="/blocked-ips">
+  <label>Adresse IP<input name="ip" required placeholder="192.168.100.20"></label>
+  <label>Motif<input name="reason" value="Blocage manuel"></label>
+  <label>Duree minutes<input name="duration_minutes" type="number" value="60" min="1"></label>
+  <button type="submit">Bloquer</button>
+</form>
+
+<h2>IP bloquees</h2>
+<table>
+  <thead><tr><th>IP</th><th>Motif</th><th>Debut</th><th>Fin</th><th>Statut</th><th></th></tr></thead>
+  <tbody>
+  {% for item in blocked_ips %}
+    <tr>
+      <td>{{ item.ip }}</td><td>{{ item.reason }}</td><td>{{ item.blocked_at }}</td><td>{{ item.blocked_until }}</td><td>{{ item.status }}</td>
+      <td><form method="post" action="/blocked-ips/{{ item.ip }}/unblock"><button>Expirer</button></form></td>
+    </tr>
+  {% else %}
+    <tr><td colspan="6">Aucune IP bloquee.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h2>Sites bloques en sortie</h2>
+<form class="grid-form compact" method="post" action="/blocked-sites">
+  <label>Domaine ou IP<input name="target" required placeholder="aerocash.app"></label>
+  <label>Motif<input name="reason" value="Blocage site"></label>
+  <button type="submit">Bloquer le site</button>
+</form>
+
+<table>
+  <thead><tr><th>Cible</th><th>IP resolues</th><th>Motif</th><th>Date</th><th></th></tr></thead>
+  <tbody>
+  {% for item in site_blocks %}
+    <tr>
+      <td>{{ item.target }}</td>
+      <td>{{ item.ips | join(", ") }}</td>
+      <td>{{ item.reason }}</td>
+      <td>{{ item.created_at }}</td>
+      <td><form method="post" action="/blocked-sites/{{ item.id }}/delete"><button class="danger">Supprimer</button></form></td>
+    </tr>
+  {% else %}
+    <tr><td colspan="5">Aucun site bloque.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h2>Historique des alertes</h2>
+<table>
+  <thead><tr><th>Date</th><th>Niveau</th><th>Message</th><th>Source</th></tr></thead>
+  <tbody>
+  {% for alert in alerts %}
+    <tr><td>{{ alert.time }}</td><td>{{ alert.level }}</td><td>{{ alert.message }}</td><td>{{ alert.source_ip }}</td></tr>
+  {% else %}
+    <tr><td colspan="4">Aucune alerte.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

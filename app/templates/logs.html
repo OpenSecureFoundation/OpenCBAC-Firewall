@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Journal des evenements</h1>
+<table>
+  <thead><tr><th>Date</th><th>Action</th><th>Message</th><th>Source</th><th>Proto</th></tr></thead>
+  <tbody>
+  {% for event in events %}
+    <tr>
+      <td>{{ event.time }}</td>
+      <td>{{ event.action }}</td>
+      <td>{{ event.message }}</td>
+      <td>{{ event.source_ip }}</td>
+      <td>{{ event.protocol }}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="5">Aucun log.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
